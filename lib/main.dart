@@ -299,38 +299,29 @@ class FaceDetectionService {
     final screenCenterX = screenSize.width / 2;
     final screenCenterY = screenSize.height / 2 - screenSize.height * 0.05;
 
-    // Calculate face center
     final faceBox = face.boundingBox;
     final faceCenterX = faceBox.left + faceBox.width / 2;
     final faceCenterY = faceBox.top + faceBox.height / 2;
 
-    // Calculate acceptable distance from center (as a percentage of screen dimensions)
-    final maxHorizontalOffset = screenSize.width * 0.1; // 10% of screen width
-    final maxVerticalOffset = screenSize.height * 0.1; // 10% of screen height
+    final maxHorizontalOffset = screenSize.width * 0.1;
+    final maxVerticalOffset = screenSize.height * 0.1;
 
-    // Calculate face size relative to oval
     final ovalHeight = screenSize.height * 0.55;
     final ovalWidth = ovalHeight * 0.75;
 
-    // Face should occupy a reasonable portion of the oval
-    const minFaceWidthRatio =
-        0.5; // Face width should be at least 50% of oval width
-    const maxFaceWidthRatio =
-        0.9; // Face width should be at most 90% of oval width
+    const minFaceWidthRatio = 0.5;
+    const maxFaceWidthRatio = 0.9;
 
     final faceWidthRatio = faceBox.width / ovalWidth;
 
-    // Check horizontal and vertical centering
     final isHorizontallyCentered =
         (faceCenterX - screenCenterX).abs() < maxHorizontalOffset;
     final isVerticallyCentered =
         (faceCenterY - screenCenterY).abs() < maxVerticalOffset;
 
-    // Check face size is appropriate
     final isRightSize = faceWidthRatio >= minFaceWidthRatio &&
         faceWidthRatio <= maxFaceWidthRatio;
 
-    // For debugging
     debugPrint(
         'Face centering: H=$isHorizontallyCentered, V=$isVerticallyCentered, Size=$isRightSize');
     debugPrint('Face width ratio: $faceWidthRatio');
@@ -465,10 +456,8 @@ class FaceDetectionService {
 
   List<double> get headAngleReadings => _headAngleReadings;
 
-  // Add this getter
   bool get isFaceCentered => _isFaceCentered;
 
-  // Modify the resetTracking method to reset face centering
   void resetTracking() {
     _lastEyeOpenProbability = null;
     _lastSmileProbability = null;
@@ -604,7 +593,6 @@ class LivenessController extends ChangeNotifier {
         final face = faces.first;
         _isFaceDetected = true;
 
-        // Check face centering
         final screenSize = Size(
           image.width.toDouble(),
           image.height.toDouble(),
@@ -613,10 +601,8 @@ class LivenessController extends ChangeNotifier {
         bool isCentered =
             _faceDetectionService.checkFaceCentering(face, screenSize);
 
-        // Update face centering message based on face position
         _updateFaceCenteringGuidance(face, screenSize);
 
-        // Only proceed with liveness detection if face is centered
         if (_session.state == LivenessState.centeringFace && isCentered) {
           _processLivenessDetection(face);
         } else if (_session.state != LivenessState.centeringFace) {
@@ -639,17 +625,14 @@ class LivenessController extends ChangeNotifier {
     final screenCenterX = screenSize.width / 2;
     final screenCenterY = screenSize.height / 2 - screenSize.height * 0.05;
 
-    // Calculate face center
     final faceBox = face.boundingBox;
     final faceCenterX = faceBox.left + faceBox.width / 2;
     final faceCenterY = faceBox.top + faceBox.height / 2;
 
-    // Calculate face size relative to oval
     final ovalHeight = screenSize.height * 0.55;
     final ovalWidth = ovalHeight * 0.75;
     final faceWidthRatio = faceBox.width / ovalWidth;
 
-    // Determine directional guidance
     final isHorizontallyOff =
         (faceCenterX - screenCenterX).abs() > screenSize.width * 0.1;
     final isVerticallyOff =
@@ -695,12 +678,10 @@ class LivenessController extends ChangeNotifier {
           _session.state = LivenessState.performingChallenges;
           _updateStatusMessage();
         } else {
-          _statusMessage =
-              _faceCenteringMessage; // Guide the user for better centering
+          _statusMessage = _faceCenteringMessage;
         }
         break;
 
-      // Rest of the method remains unchanged
       case LivenessState.performingChallenges:
         if (_session.currentChallengeIndex >= _session.challenges.length) {
           _session.state = LivenessState.completed;
@@ -733,7 +714,6 @@ class LivenessController extends ChangeNotifier {
     }
   }
 
-  // Add this getter for the face centering message
   String get faceCenteringMessage => _faceCenteringMessage;
 
   void _updateStatusMessage() {
@@ -777,18 +757,16 @@ class OvalOverlayPainter extends CustomPainter {
 
   OvalOverlayPainter({
     this.isFaceDetected = false,
-    this.ovalColor = const Color(0xFF8A8DDF), // Purple color from screenshot
-    this.strokeWidth = 5.0, // Thicker border as seen in the image
+    this.ovalColor = const Color(0xFF8A8DDF),
+    this.strokeWidth = 5.0,
   });
 
   @override
   void paint(Canvas canvas, Size size) {
-    // Center oval in screen, positioned slightly higher than center
     final center = Offset(size.width / 2, size.height / 2 - size.height * 0.05);
 
-    // Create a taller egg-shaped oval as shown in the screenshot
     final ovalHeight = size.height * 0.55;
-    final ovalWidth = ovalHeight * 0.75; // Narrower width for egg shape
+    final ovalWidth = ovalHeight * 0.75;
 
     final ovalRect = Rect.fromCenter(
       center: center,
@@ -796,10 +774,8 @@ class OvalOverlayPainter extends CustomPainter {
       height: ovalHeight,
     );
 
-    // Option 1: Transparent cutout effect (like current implementation)
-    // If you want to keep the dimmed background with oval cutout
     final paint = Paint()
-      ..color = Colors.black.withOpacity(0.8) // Much lighter dimming effect
+      ..color = Colors.black.withOpacity(0.8)
       ..style = PaintingStyle.fill;
 
     final path = Path()
@@ -809,16 +785,13 @@ class OvalOverlayPainter extends CustomPainter {
 
     canvas.drawPath(path, paint);
 
-    // Draw the oval border with fixed purple color
     final borderPaint = Paint()
-      ..color = ovalColor // Use purple color instead of status-based color
+      ..color = ovalColor
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth;
 
     canvas.drawOval(ovalRect, borderPaint);
 
-    // Remove guide markers as they're not in the screenshot
-    // If you want to keep them, uncomment these lines:
     /*
     canvas.drawLine(
       Offset(center.dx, center.dy - ovalHeight * AppConstants.guideMarkerRatio),
@@ -1003,9 +976,6 @@ class _LivenessDetectionView extends StatelessWidget {
                     ),
                   ),
                 ),
-
-                // Add face centering guidance at the bottom of the screen
-                // Only show during centering phase
                 if (controller.currentState == LivenessState.centeringFace)
                   Positioned(
                     bottom: 100 + mediaQuery.padding.bottom,
@@ -1015,7 +985,7 @@ class _LivenessDetectionView extends StatelessWidget {
                       child: Text(
                         controller.faceCenteringMessage,
                         style: const TextStyle(
-                          color: Color(0xFF2E38B7), // Dark blue color
+                          color: Color(0xFF2E38B7),
                           fontSize: 18,
                           fontWeight: FontWeight.w500,
                         ),
@@ -1023,7 +993,6 @@ class _LivenessDetectionView extends StatelessWidget {
                       ),
                     ),
                   ),
-
                 Positioned(
                   bottom: 40 + mediaQuery.padding.bottom,
                   left: 20,
