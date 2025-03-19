@@ -5,7 +5,7 @@ PODS:
   - google_mlkit_commons (0.6.1):
     - Flutter
     - MLKitVision
-  - google_mlkit_face_detection (0.9.0):
+  - google_mlkit_face_liveness_detection (0.9.0):
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/FaceDetection (~> 4.0.0)
@@ -74,7 +74,7 @@ DEPENDENCIES:
   - camera_avfoundation (from `.symlinks/plugins/camera_avfoundation/ios`)
   - Flutter (from `Flutter`)
   - google_mlkit_commons (from `.symlinks/plugins/google_mlkit_commons/ios`)
-  - google_mlkit_face_detection (from `.symlinks/plugins/google_mlkit_face_detection/ios`)
+  - google_mlkit_face_liveness_detection (from `.symlinks/plugins/google_mlkit_face_liveness_detection/ios`)
   - sensors_plus (from `.symlinks/plugins/sensors_plus/ios`)
 
 SPEC REPOS:
@@ -99,8 +99,8 @@ EXTERNAL SOURCES:
     :path: Flutter
   google_mlkit_commons:
     :path: ".symlinks/plugins/google_mlkit_commons/ios"
-  google_mlkit_face_detection:
-    :path: ".symlinks/plugins/google_mlkit_face_detection/ios"
+  google_mlkit_face_liveness_detection:
+    :path: ".symlinks/plugins/google_mlkit_face_liveness_detection/ios"
   sensors_plus:
     :path: ".symlinks/plugins/sensors_plus/ios"
 
@@ -108,7 +108,7 @@ SPEC CHECKSUMS:
   camera_avfoundation: 04b44aeb14070126c6529e5ab82cc7c9fca107cf
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   google_mlkit_commons: f27386da2a4d88eb7c56b4dd38dfcf61d9257d57
-  google_mlkit_face_detection: 95565acf9e622b31d971c2ade8c804acd9be1e6e
+  google_mlkit_face_liveness_detection: 95565acf9e622b31d971c2ade8c804acd9be1e6e
   GoogleDataTransport: 6c09b596d841063d76d4288cc2d2f42cc36e1e2a
   GoogleMLKit: 2bd0dc6253c4d4f227aad460f69215a504b2980e
   GoogleToolboxForMac: 8bef7c7c5cf7291c687cf5354f39f9db6399ad34

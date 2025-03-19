@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.CAMERA" />
     <application
-        android:label="face_detection"
+        android:label="face_liveness_detection"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
