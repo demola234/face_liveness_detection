@@ -19,7 +19,7 @@ Add this package to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  face_liveness_detection: ^0.1.0
+  face_liveness_detection: ^0.0.1
 ```
 
 Then run:
