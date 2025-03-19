@@ -1,7 +1,7 @@
 name: face_liveness_detection
 description: A highly customizable Flutter package for face liveness detection with multiple challenge types. This package helps you verify that a real person is present in front of the camera, not a photo, video, or mask.
 version: 0.0.1
-homepage: https://github.com/yourusername/face_liveness_detection
+homepage: https://github.com/demola234/face_liveness_detection
 
 environment:
   sdk: ">=2.18.0 <4.0.0"
