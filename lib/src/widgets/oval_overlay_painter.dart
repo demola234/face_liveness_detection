@@ -7,13 +7,13 @@ import '../config/theme_config.dart';
 class OvalOverlayPainter extends CustomPainter {
   /// Whether a face is detected
   final bool isFaceDetected;
-  
+
   /// Liveness config
   final LivenessConfig config;
-  
+
   /// Liveness theme
   final LivenessTheme theme;
-  
+
   /// Animation value for pulsing effect
   final double? animationValue;
 
@@ -33,9 +33,10 @@ class OvalOverlayPainter extends CustomPainter {
     final ovalWidth = ovalHeight * config.ovalWidthRatio;
 
     // Apply animation if enabled and available
-    final double strokeWidth = theme.useOvalPulseAnimation && animationValue != null
-        ? config.strokeWidth * (1.0 + animationValue! * 0.5)
-        : config.strokeWidth;
+    final double strokeWidth =
+        theme.useOvalPulseAnimation && animationValue != null
+            ? config.strokeWidth * (1.0 + animationValue! * 0.5)
+            : config.strokeWidth;
 
     final ovalRect = Rect.fromCenter(
       center: center,
@@ -67,21 +68,6 @@ class OvalOverlayPainter extends CustomPainter {
     }
 
     canvas.drawOval(ovalRect, borderPaint);
-
-    // Optional guide markers
-    if (config.guideMarkerRatio > 0 && config.guideMarkerInnerRatio > 0) {
-      canvas.drawLine(
-        Offset(center.dx, center.dy - ovalHeight * config.guideMarkerRatio),
-        Offset(center.dx, center.dy - ovalHeight * config.guideMarkerInnerRatio),
-        borderPaint,
-      );
-
-      canvas.drawLine(
-        Offset(center.dx, center.dy + ovalHeight * config.guideMarkerRatio),
-        Offset(center.dx, center.dy + ovalHeight * config.guideMarkerInnerRatio),
-        borderPaint,
-      );
-    }
   }
 
   @override
@@ -96,20 +82,20 @@ class OvalOverlayPainter extends CustomPainter {
 class AnimatedOvalOverlay extends StatefulWidget {
   /// Whether a face is detected
   final bool isFaceDetected;
-  
+
   /// Liveness config
   final LivenessConfig config;
-  
+
   /// Liveness theme
   final LivenessTheme theme;
 
   /// Constructor
   const AnimatedOvalOverlay({
-    Key? key,
+    super.key,
     this.isFaceDetected = false,
     this.config = const LivenessConfig(),
     this.theme = const LivenessTheme(),
-  }) : super(key: key);
+  });
 
   @override
   State<AnimatedOvalOverlay> createState() => _AnimatedOvalOverlayState();
@@ -123,14 +109,14 @@ class _AnimatedOvalOverlayState extends State<AnimatedOvalOverlay>
   @override
   void initState() {
     super.initState();
-    
+
     // Only create animation if pulse effect is enabled
     if (widget.theme.useOvalPulseAnimation) {
       _controller = AnimationController(
         duration: const Duration(seconds: 2),
         vsync: this,
       )..repeat(reverse: true);
-      
+
       _animation = Tween<double>(begin: 0.0, end: 1.0).animate(
         CurvedAnimation(
           parent: _controller,

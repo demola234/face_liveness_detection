@@ -262,7 +262,8 @@ class LivenessController extends ChangeNotifier {
     _statusMessage = 'Liveness verification complete!';
 
     // Notify via callback
-    _onLivenessCompleted?.call(_session.sessionId, _isVerificationSuccessful);
+    _onLivenessCompleted
+        ?.call(_session.sessionId, _isVerificationSuccessful, {});
   }
 
   /// Update the current status message

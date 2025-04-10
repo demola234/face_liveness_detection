@@ -18,7 +18,7 @@ class LivenessConstants {
   static const double defaultMaxBrightPercentage = 0.30;
 
   // Camera settings
-  static const double defaultCameraZoomLevel = 1.5;
+  static const double defaultCameraZoomLevel = 0.5;
 
   // Motion detection
   static const int defaultMaxMotionReadings = 100;
@@ -27,8 +27,8 @@ class LivenessConstants {
   static const double defaultMinDeviceMovementThreshold = 0.5;
 
   // UI settings
-  static const double defaultOvalHeightRatio = 0.9;
-  static const double defaultOvalWidthRatio = 0.9;
+  static const double defaultOvalHeightRatio = 0.55;
+  static const double defaultOvalWidthRatio = 0.75;
   static const double defaultStrokeWidth = 4.0;
   static const double defaultGuideMarkerRatio = 0.55;
   static const double defaultGuideMarkerInnerRatio = 0.35;

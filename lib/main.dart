@@ -216,7 +216,7 @@ class HomeScreen extends StatelessWidget {
           onChallengeCompleted: (challengeType) {
             print('Challenge completed: $challengeType');
           },
-          onLivenessCompleted: (sessionId, isSuccessful) {
+          onLivenessCompleted: (sessionId, isSuccessful, metadata) {
             print('Liveness verification completed:');
             print('Session ID: $sessionId');
             print('Success: $isSuccessful');
@@ -240,6 +240,8 @@ class HomeScreen extends StatelessWidget {
             brightness: Brightness.dark,
           ),
           showCaptureImageButton: true,
+          showStatusIndicators: false,
+          showAppBar: false,
           captureButtonText: 'Take Photo',
           onImageCaptured: (sessionId, imageFile) {
             // Show a dialog with the captured image
@@ -276,7 +278,7 @@ class HomeScreen extends StatelessWidget {
               ),
             );
           },
-          onLivenessCompleted: (sessionId, isSuccessful) {
+          onLivenessCompleted: (sessionId, isSuccessful, metadata) {
             print('Liveness verification completed:');
             print('Session ID: $sessionId');
             print('Success: $isSuccessful');

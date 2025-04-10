@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class LivenessProgressBar extends StatelessWidget {
@@ -14,10 +13,10 @@ class LivenessProgressBar extends StatelessWidget {
     return LinearProgressIndicator(
       value: progress,
       backgroundColor: Colors.grey.withOpacity(0.5),
-      valueColor: AlwaysStoppedAnimation<Color>(
-        progress == 1.0 ? Colors.green : Colors.blue,
-      ),
-      minHeight: 10,
+      // valueColor: AlwaysStoppedAnimation<Color>(
+      //   progress == 1.0 ? Colors.green : Colors.blue,
+      // ),
+      // minHeight: 10,
     );
   }
 }
