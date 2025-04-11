@@ -1,9 +1,9 @@
 import 'dart:math' as math;
 
+import 'package:face_liveness_detection/src/utils/enums.dart';
 import 'package:uuid/uuid.dart';
 
 import '../config/app_config.dart';
-import '../utils/constants.dart';
 import 'challenge.dart';
 
 /// Represents a liveness detection session

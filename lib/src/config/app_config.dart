@@ -1,3 +1,5 @@
+import 'package:face_liveness_detection/src/utils/enums.dart';
+
 import '../utils/constants.dart';
 
 /// Configuration class for customizing the Face Liveness Detection package

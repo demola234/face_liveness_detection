@@ -34,11 +34,3 @@ class LivenessConstants {
   static const double defaultGuideMarkerInnerRatio = 0.35;
 }
 
-enum ChallengeType { blink, turnLeft, turnRight, smile, nod }
-
-enum LivenessState {
-  initial,
-  centeringFace,
-  performingChallenges,
-  completed,
-}

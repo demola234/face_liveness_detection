@@ -1,5 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:face_liveness_detection/face_liveness_detection.dart';
+import 'package:face_liveness_detection/src/utils/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

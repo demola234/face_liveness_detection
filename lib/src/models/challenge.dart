@@ -1,4 +1,4 @@
-import '../utils/constants.dart';
+import 'package:face_liveness_detection/src/utils/enums.dart';
 
 /// Represents a liveness detection challenge that the user must complete
 class Challenge {

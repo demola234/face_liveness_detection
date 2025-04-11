@@ -10,10 +10,10 @@ import '../config/app_config.dart';
 class MotionService {
   /// Accelerometer readings
   final List<AccelerometerEvent> _accelerometerReadings = [];
-  
+
   /// Subscription to accelerometer events
   StreamSubscription<AccelerometerEvent>? _accelerometerSubscription;
-  
+
   /// Configuration for liveness detection
   LivenessConfig _config;
 
@@ -36,13 +36,11 @@ class MotionService {
   /// Update configuration
   void updateConfig(LivenessConfig config) {
     _config = config;
-    
+
     // Trim readings if the max count was reduced
     if (_accelerometerReadings.length > _config.maxMotionReadings) {
       _accelerometerReadings.removeRange(
-        0, 
-        _accelerometerReadings.length - _config.maxMotionReadings
-      );
+          0, _accelerometerReadings.length - _config.maxMotionReadings);
     }
   }
 
@@ -80,8 +78,8 @@ class MotionService {
     _accelerometerSubscription?.cancel();
     _accelerometerSubscription = null;
   }
-  
+
   /// Get raw accelerometer readings
-  List<AccelerometerEvent> get accelerometerReadings => 
+  List<AccelerometerEvent> get accelerometerReadings =>
       List<AccelerometerEvent>.unmodifiable(_accelerometerReadings);
 }
