@@ -5,7 +5,6 @@ import 'package:flutter/widgets.dart';
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 
 import '../config/app_config.dart';
-import '../utils/constants.dart';
 
 /// Service for face detection and gesture recognition
 class FaceDetectionService {
