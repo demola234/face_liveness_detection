@@ -55,6 +55,7 @@ Here's how to quickly integrate face liveness detection into your app:
 import 'package:camera/camera.dart';
 import 'package:face_liveness_detection/face_liveness_detection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/developer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -78,8 +79,8 @@ class MyApp extends StatelessWidget {
         body: LivenessDetectionScreen(
           cameras: cameras,
           onLivenessCompleted: (sessionId, isSuccessful) {
-            print('Liveness verification completed: $isSuccessful');
-            print('Session ID: $sessionId');
+            log('Liveness verification completed: $isSuccessful');
+            log('Session ID: $sessionId');
           },
         ),
       ),
@@ -176,12 +177,12 @@ LivenessDetectionScreen(
   config: config,
   theme: theme,
   onChallengeCompleted: (challengeType) {
-    print('Challenge completed: $challengeType');
+    log('Challenge completed: $challengeType');
   },
   onLivenessCompleted: (sessionId, isSuccessful) {
-    print('Liveness verification completed:');
-    print('Session ID: $sessionId');
-    print('Success: $isSuccessful');
+    log('Liveness verification completed:');
+    log('Session ID: $sessionId');
+    log('Success: $isSuccessful');
 
     // You can now send this session ID to your backend
     // for verification or proceed with your app flow
@@ -216,7 +217,7 @@ LivenessDetectionScreen(
   captureButtonText: 'Take Photo',
   onImageCaptured: (sessionId, imageFile) {
     // imageFile is an XFile that contains the captured image
-    print('Image saved to: ${imageFile.path}');
+    log('Image saved to: ${imageFile.path}');
 
     // You can now:
     // 1. Display the image
