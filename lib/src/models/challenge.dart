@@ -1,16 +1,16 @@
-import 'package:face_liveness_detection/src/utils/enums.dart';
+import 'package:smart_liveness_detection/src/utils/enums.dart';
 
 /// Represents a liveness detection challenge that the user must complete
 class Challenge {
   /// The type of challenge
   final ChallengeType type;
-  
+
   /// Whether the challenge has been completed
   bool isCompleted;
-  
+
   /// Custom instruction text (overrides default)
   final String? customInstruction;
-  
+
   /// Map of default challenge instructions
   static final Map<ChallengeType, String> _defaultInstructions = {
     ChallengeType.blink: 'Please blink your eyes slowly',
@@ -28,12 +28,12 @@ class Challenge {
 
   /// Get the instruction text for this challenge
   String get instruction => customInstruction ?? _defaultInstructions[type]!;
-  
+
   /// Get the default instruction for a challenge type
   static String getDefaultInstruction(ChallengeType type) {
     return _defaultInstructions[type]!;
   }
-  
+
   /// Create a copy of this challenge with some values replaced
   Challenge copyWith({
     ChallengeType? type,

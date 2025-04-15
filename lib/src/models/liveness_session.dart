@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 
-import 'package:face_liveness_detection/src/utils/enums.dart';
+import 'package:smart_liveness_detection/src/utils/enums.dart';
 import 'package:uuid/uuid.dart';
 
 import '../config/app_config.dart';
@@ -10,19 +10,19 @@ import 'challenge.dart';
 class LivenessSession {
   /// Unique identifier for this session
   final String sessionId;
-  
+
   /// Time when the session started
   final DateTime startTime;
-  
+
   /// List of challenges to complete
   final List<Challenge> challenges;
-  
+
   /// Index of the current challenge
   int currentChallengeIndex;
-  
+
   /// Current state of the liveness detection process
   LivenessState state;
-  
+
   /// Any custom data associated with this session
   final Map<String, dynamic>? metadata;
 
@@ -89,31 +89,30 @@ class LivenessSession {
     ];
 
     final List<Challenge> challenges = [];
-    
+
     // Always include blink challenge if configured
     if (config.alwaysIncludeBlink) {
-      String? customInstruction = config.challengeInstructions?[ChallengeType.blink];
-      challenges.add(Challenge(ChallengeType.blink, customInstruction: customInstruction));
+      String? customInstruction =
+          config.challengeInstructions?[ChallengeType.blink];
+      challenges.add(
+          Challenge(ChallengeType.blink, customInstruction: customInstruction));
       allChallenges.remove(ChallengeType.blink);
     }
 
     // Add random challenges
     allChallenges.shuffle(random);
-    final int remainingChallenges = config.alwaysIncludeBlink 
-        ? config.numberOfRandomChallenges - 1 
+    final int remainingChallenges = config.alwaysIncludeBlink
+        ? config.numberOfRandomChallenges - 1
         : config.numberOfRandomChallenges;
-        
-    challenges.addAll(
-      allChallenges
-        .take(remainingChallenges)
-        .map((type) {
-          String? customInstruction = config.challengeInstructions?[type];
-          return Challenge(type, customInstruction: customInstruction);
-        })
-    );
+
+    challenges.addAll(allChallenges.take(remainingChallenges).map((type) {
+      String? customInstruction = config.challengeInstructions?[type];
+      return Challenge(type, customInstruction: customInstruction);
+    }));
 
     // Shuffle the challenges if blink isn't first
-    if (!config.alwaysIncludeBlink || challenges.first.type != ChallengeType.blink) {
+    if (!config.alwaysIncludeBlink ||
+        challenges.first.type != ChallengeType.blink) {
       challenges.shuffle(random);
     }
 
@@ -132,7 +131,7 @@ class LivenessSession {
   bool isExpired(Duration maxDuration) {
     return DateTime.now().difference(startTime) > maxDuration;
   }
-  
+
   /// Create a copy of this session with some values replaced
   LivenessSession copyWith({
     String? sessionId,
@@ -146,7 +145,8 @@ class LivenessSession {
       sessionId: sessionId ?? this.sessionId,
       startTime: startTime ?? this.startTime,
       challenges: challenges ?? this.challenges,
-      currentChallengeIndex: currentChallengeIndex ?? this.currentChallengeIndex,
+      currentChallengeIndex:
+          currentChallengeIndex ?? this.currentChallengeIndex,
       state: state ?? this.state,
       metadata: metadata ?? this.metadata,
     );

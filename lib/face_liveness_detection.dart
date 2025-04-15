@@ -1,4 +1,4 @@
-library face_liveness_detection;
+library smart_liveness_detection;
 
 // Configuration
 export 'src/config/app_config.dart';
@@ -17,6 +17,5 @@ export 'src/widgets/liveness_detection_screen.dart';
 
 // Callback types
 typedef LivenessCompletedCallback = void Function(
-    String sessionId, bool isSuccessful,
-    Map<String, dynamic>? metadata);
+    String sessionId, bool isSuccessful, Map<String, dynamic>? metadata);
 typedef ChallengeCompletedCallback = void Function(String challengeType);

@@ -19,7 +19,7 @@ Add this package to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  face_liveness_detection: ^0.0.1
+  smart_liveness_detection: ^0.0.1
 ```
 
 Then run:
@@ -53,7 +53,7 @@ Here's how to quickly integrate face liveness detection into your app:
 
 ```dart
 import 'package:camera/camera.dart';
-import 'package:face_liveness_detection/face_liveness_detection.dart';
+import 'package:smart_liveness_detection/smart_liveness_detection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/developer.dart';
 

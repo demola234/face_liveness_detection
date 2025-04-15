@@ -1,8 +1,8 @@
 import 'package:camera/camera.dart';
-import 'package:face_liveness_detection/face_liveness_detection.dart';
-import 'package:face_liveness_detection/src/utils/enums.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
+import 'package:smart_liveness_detection/smart_liveness_detection.dart';
+import 'package:smart_liveness_detection/src/utils/enums.dart';
 
 import '../services/camera_service.dart';
 import '../services/face_detection_service.dart';

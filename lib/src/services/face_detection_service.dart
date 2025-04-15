@@ -1,8 +1,8 @@
 import 'package:camera/camera.dart';
-import 'package:face_liveness_detection/src/utils/enums.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
+import 'package:smart_liveness_detection/src/utils/enums.dart';
 
 import '../config/app_config.dart';
 
@@ -10,25 +10,25 @@ import '../config/app_config.dart';
 class FaceDetectionService {
   /// ML Kit face detector
   late FaceDetector _faceDetector;
-  
+
   /// Whether currently processing an image
   bool _isProcessingImage = false;
-  
+
   /// Last measured eye open probability
   double? _lastEyeOpenProbability;
-  
+
   /// Last measured smile probability
   double? _lastSmileProbability;
-  
+
   /// Whether face is properly centered
   bool _isFaceCentered = false;
-  
+
   /// Last measured head angle X (for nodding)
   double? _lastHeadEulerAngleX;
-  
+
   /// History of head angle readings
   final List<double> _headAngleReadings = [];
-  
+
   /// Configuration for liveness detection
   final LivenessConfig _config;
 
