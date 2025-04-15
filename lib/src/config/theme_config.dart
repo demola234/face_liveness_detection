@@ -163,9 +163,9 @@ class LivenessTheme {
     );
     
     return LivenessTheme(
-      appBarBackgroundColor: colorScheme.surface.withOpacity(0.8),
+      appBarBackgroundColor: colorScheme.surface.withValues(alpha: 0.8),
       appBarTextColor: colorScheme.onSurface,
-      backgroundColor: colorScheme.background,
+      backgroundColor: colorScheme.surface,
       primaryColor: colorScheme.primary,
       successColor: colorScheme.secondary,
       errorColor: colorScheme.error,
@@ -187,7 +187,7 @@ class LivenessTheme {
         fontWeight: FontWeight.w500,
       ),
       progressIndicatorColor: colorScheme.primary,
-      progressIndicatorBackgroundColor: colorScheme.surfaceVariant,
+      progressIndicatorBackgroundColor: colorScheme.surfaceContainerHighest,
     );
   }
 }
