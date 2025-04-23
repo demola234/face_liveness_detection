@@ -19,7 +19,7 @@ Add this package to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  smart_liveness_detection: ^0.0.1
+  smart_liveness_detection: ^0.0.1-beta.5
 ```
 
 Then run:

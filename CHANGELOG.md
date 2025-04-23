@@ -1,8 +1,8 @@
 # Changelog
 
-## 0.0.2 - April 23, 2025
+## 0.0.1-beta.5 - April 23, 2025
 * Bug fixes and improvements
-* Android fix
+* Android fix initialization fix
 
 
 ## 0.0.1 - Initial Release (April 15, 2025)

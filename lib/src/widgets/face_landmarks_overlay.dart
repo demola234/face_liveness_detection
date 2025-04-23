@@ -7,43 +7,43 @@ import '../config/theme_config.dart';
 class FaceLandmarksOverlay extends StatelessWidget {
   /// Detected face
   final Face? face;
-  
+
   /// Theme for styling
   final LivenessTheme theme;
-  
+
   /// Size of the image
   final Size imageSize;
-  
+
   /// Scale factor for the display
   final double scale;
-  
+
   /// Whether to show face contour
   final bool showContour;
-  
+
   /// Whether to show facial landmarks
   final bool showLandmarks;
-  
+
   /// Whether to show bounding box
   final bool showBoundingBox;
-  
+
   /// Whether to show head rotation angles
   final bool showHeadRotation;
-  
+
   /// Color for landmarks
   final Color landmarkColor;
-  
+
   /// Color for contours
   final Color contourColor;
-  
+
   /// Color for bounding box
   final Color boundingBoxColor;
-  
+
   /// Width of the stroke
   final double strokeWidth;
 
   /// Constructor
   const FaceLandmarksOverlay({
-    Key? key,
+    super.key,
     this.face,
     this.theme = const LivenessTheme(),
     required this.imageSize,
@@ -56,11 +56,9 @@ class FaceLandmarksOverlay extends StatelessWidget {
     Color? contourColor,
     Color? boundingBoxColor,
     this.strokeWidth = 3.0,
-  }) : 
-    landmarkColor = landmarkColor ?? Colors.yellow,
-    contourColor = contourColor ?? Colors.green,
-    boundingBoxColor = boundingBoxColor ?? Colors.red,
-    super(key: key);
+  })  : landmarkColor = landmarkColor ?? Colors.yellow,
+        contourColor = contourColor ?? Colors.green,
+        boundingBoxColor = boundingBoxColor ?? Colors.red;
 
   @override
   Widget build(BuildContext context) {
@@ -227,11 +225,11 @@ class _FaceLandmarksPainter extends CustomPainter {
     }
 
     // Draw head rotation information
-    if (showHeadRotation && 
-        (face.headEulerAngleX != null || 
-         face.headEulerAngleY != null || 
-         face.headEulerAngleZ != null)) {
-      final textStyle = TextStyle(
+    if (showHeadRotation &&
+        (face.headEulerAngleX != null ||
+            face.headEulerAngleY != null ||
+            face.headEulerAngleZ != null)) {
+      const textStyle = TextStyle(
         color: Colors.white,
         backgroundColor: Colors.black54,
         fontSize: 14,
@@ -258,7 +256,7 @@ class _FaceLandmarksPainter extends CustomPainter {
       );
       textPainter.layout();
       textPainter.paint(
-        canvas, 
+        canvas,
         Offset(
           face.boundingBox.right * scaleX + 8,
           face.boundingBox.top * scaleY,
