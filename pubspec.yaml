@@ -1,7 +1,7 @@
-name: smart_liveness_detection
+name: smart_liveliness_detection
 description: This package helps you verify that a real person is present in front of the camera, not a photo, video, or mask.
 version: 0.0.1-beta.5
-homepage: https://github.com/demola234/smart_liveness_detection
+homepage: https://github.com/demola234/smart_liveliness_detection
 
 environment:
   sdk: ">=2.18.0 <4.0.0"

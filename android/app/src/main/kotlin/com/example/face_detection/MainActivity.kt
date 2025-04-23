@@ -1,4 +1,4 @@
-package com.example.smart_liveness_detection
+package com.example.smart_liveliness_detection
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,4 +1,4 @@
-import 'package:smart_liveness_detection/src/utils/enums.dart';
+import 'package:smart_liveliness_detection/src/utils/enums.dart';
 
 /// Represents a liveness detection challenge that the user must complete
 class Challenge {

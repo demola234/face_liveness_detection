@@ -1,4 +1,4 @@
-library smart_liveness_detection;
+library smart_liveliness_detection;
 
 // Configuration
 export 'src/config/app_config.dart';
@@ -13,7 +13,7 @@ export 'src/utils/constants.dart';
 // Export public APIs
 
 // Main widgets
-export 'src/widgets/liveness_detection_screen.dart';
+export 'src/widgets/liveliness_detection_screen.dart';
 
 // Callback types
 typedef LivenessCompletedCallback = void Function(

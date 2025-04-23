@@ -1,9 +1,9 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:smart_liveness_detection/smart_liveness_detection.dart';
-import 'package:smart_liveness_detection/src/utils/enums.dart';
-import 'package:smart_liveness_detection/src/widgets/oval_progress.dart';
+import 'package:smart_liveliness_detection/smart_liveliness_detection.dart';
+import 'package:smart_liveliness_detection/src/utils/enums.dart';
+import 'package:smart_liveliness_detection/src/widgets/oval_progress.dart';
 
 import 'instruction_overlay.dart';
 import 'liveness_progress_bar.dart';
