@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_liveness_detection/smart_liveness_detection.dart';
 import 'package:smart_liveness_detection/src/utils/enums.dart';
+import 'package:smart_liveness_detection/src/widgets/oval_progress.dart';
 
 import 'instruction_overlay.dart';
 import 'liveness_progress_bar.dart';
-import 'oval_overlay_painter.dart';
 import 'status_indicator.dart';
 import 'success_overlay.dart';
 
@@ -131,6 +131,7 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionScreen>
 }
 
 /// View component of the liveness detection screen
+/// View component of the liveness detection screen
 class LivenessDetectionView extends StatelessWidget {
   /// Whether to show app bar
   final bool showAppBar;
@@ -153,6 +154,9 @@ class LivenessDetectionView extends StatelessWidget {
   /// Text for the capture button
   final String? captureButtonText;
 
+  /// Whether to use circular progress around oval
+  final bool useCircularProgress;
+
   /// Constructor
   const LivenessDetectionView({
     super.key,
@@ -163,6 +167,7 @@ class LivenessDetectionView extends StatelessWidget {
     this.showCaptureImageButton = false,
     this.onImageCaptured,
     this.captureButtonText,
+    this.useCircularProgress = true,
   });
 
   @override
@@ -226,11 +231,15 @@ class LivenessDetectionView extends StatelessWidget {
                 // Camera preview
                 _buildCameraPreview(controller),
 
-                // Oval overlay
-                AnimatedOvalOverlay(
+                // Oval overlay with color progress indicator
+                OvalColorProgressOverlay(
                   isFaceDetected: controller.isFaceDetected,
                   config: controller.config,
                   theme: controller.theme,
+                  progress: controller.progress,
+                  startColor: theme
+                      .primaryColor, // Starting color (primary theme color)
+                  endColor: theme.successColor, // Ending color (success color)
                 ),
 
                 // Status indicators
@@ -283,15 +292,16 @@ class LivenessDetectionView extends StatelessWidget {
                     ),
                   ),
 
-                // Progress bar
-                Positioned(
-                  bottom: 40 + mediaQuery.padding.bottom,
-                  left: 20,
-                  right: 20,
-                  child: LivenessProgressBar(
-                    progress: controller.progress,
+                // Bottom progress bar (only if circular progress is disabled)
+                if (!useCircularProgress)
+                  Positioned(
+                    bottom: 40 + mediaQuery.padding.bottom,
+                    left: 20,
+                    right: 20,
+                    child: LivenessProgressBar(
+                      progress: controller.progress,
+                    ),
                   ),
-                ),
 
                 // Success overlay
                 if (controller.currentState == LivenessState.completed)

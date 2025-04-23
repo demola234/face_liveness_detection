@@ -33,4 +33,3 @@ class LivenessConstants {
   static const double defaultGuideMarkerRatio = 0.55;
   static const double defaultGuideMarkerInnerRatio = 0.35;
 }
-
