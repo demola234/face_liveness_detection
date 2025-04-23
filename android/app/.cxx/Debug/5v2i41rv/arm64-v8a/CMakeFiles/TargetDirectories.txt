@@ -1,0 +1,2 @@
+/Users/ademolakolawole/Projects/face_liveness_detection/android/app/.cxx/Debug/5v2i41rv/arm64-v8a/CMakeFiles/edit_cache.dir
+/Users/ademolakolawole/Projects/face_liveness_detection/android/app/.cxx/Debug/5v2i41rv/arm64-v8a/CMakeFiles/rebuild_cache.dir

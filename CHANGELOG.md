@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.0.2 - April 23, 2025
+* Bug fixes and improvements
+* Android fix
+
+
 ## 0.0.1 - Initial Release (April 15, 2025)
 
 * Initial release of the Face Liveness Detection package
