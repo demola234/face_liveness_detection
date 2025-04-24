@@ -2,6 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 import 'package:smart_liveliness_detection/smart_liveliness_detection.dart';
+import 'package:smart_liveliness_detection/src/services/capture_service.dart';
 import 'package:smart_liveliness_detection/src/utils/enums.dart';
 
 import '../services/camera_service.dart';
@@ -18,6 +19,9 @@ class LivenessController extends ChangeNotifier {
 
   /// Motion service
   final MotionService _motionService;
+
+  /// Single capture service
+  CaptureService? _singleCaptureService;
 
   /// Available cameras
   final List<CameraDescription> _cameras;
@@ -49,8 +53,16 @@ class LivenessController extends ChangeNotifier {
   /// Callback for when liveness verification is completed
   final LivenessCompletedCallback? _onLivenessCompleted;
 
+  /// Callback for when final image is captured
+  final Function(
+          String sessionId, XFile imageFile, Map<String, dynamic> metadata)?
+      _onFinalImageCaptured;
+
   /// Whether verification was successful (after completion)
   bool _isVerificationSuccessful = false;
+
+  /// Whether to capture image at end of verification
+  final bool _captureFinalImage;
 
   /// Constructor
   LivenessController({
@@ -63,6 +75,9 @@ class LivenessController extends ChangeNotifier {
     List<ChallengeType>? challengeTypes,
     ChallengeCompletedCallback? onChallengeCompleted,
     LivenessCompletedCallback? onLivenessCompleted,
+    Function(String sessionId, XFile imageFile, Map<String, dynamic> metadata)?
+        onFinalImageCaptured,
+    bool captureFinalImage = true,
   })  : _cameras = cameras,
         _config = config ?? const LivenessConfig(),
         _theme = theme ?? const LivenessTheme(),
@@ -72,6 +87,8 @@ class LivenessController extends ChangeNotifier {
         _motionService = motionService ?? MotionService(config: config),
         _onChallengeCompleted = onChallengeCompleted,
         _onLivenessCompleted = onLivenessCompleted,
+        _onFinalImageCaptured = onFinalImageCaptured,
+        _captureFinalImage = captureFinalImage,
         _session = LivenessSession(
           challenges: LivenessSession.generateRandomChallenges(
               config ?? const LivenessConfig()),
@@ -86,6 +103,13 @@ class LivenessController extends ChangeNotifier {
       _motionService.startAccelerometerTracking();
 
       _cameraService.controller?.startImageStream(_processCameraImage);
+
+      // Initialize single capture service if enabled
+      if (_captureFinalImage && _cameraService.controller != null) {
+        _singleCaptureService = CaptureService(
+          cameraController: _cameraService.controller,
+        );
+      }
 
       notifyListeners();
     } catch (e) {
@@ -248,7 +272,7 @@ class LivenessController extends ChangeNotifier {
   }
 
   /// Complete the liveness session
-  void _completeSession() {
+  void _completeSession() async {
     _session.state = LivenessState.completed;
 
     bool motionValid = _motionService
@@ -261,6 +285,31 @@ class LivenessController extends ChangeNotifier {
     }
 
     _statusMessage = 'Liveness verification complete!';
+
+    // Capture final image if enabled and verification was successful
+    if (_captureFinalImage && _isVerificationSuccessful) {
+      try {
+        final XFile? finalImage = await captureImage();
+
+        if (finalImage != null && _onFinalImageCaptured != null) {
+          // Create metadata for the captured image
+          final Map<String, dynamic> metadata = {
+            'timestamp': DateTime.now().millisecondsSinceEpoch,
+            'verificationResult': _isVerificationSuccessful,
+            'challenges':
+                _session.challenges.map((c) => c.type.toString()).toList(),
+            'sessionDuration':
+                DateTime.now().difference(_session.startTime).inMilliseconds,
+            'lightingValue': _cameraService.lightingValue,
+          };
+
+          // Call the callback with the image and metadata
+          _onFinalImageCaptured!(_session.sessionId, finalImage, metadata);
+        }
+      } catch (e) {
+        debugPrint('Error capturing final image: $e');
+      }
+    }
 
     // Notify via callback
     _onLivenessCompleted
@@ -345,7 +394,10 @@ class LivenessController extends ChangeNotifier {
 
   /// Capture current image as a file
   Future<XFile?> captureImage() async {
-    if (_cameraService.isInitialized && _cameraService.controller != null) {
+    if (_singleCaptureService != null) {
+      return _singleCaptureService!.captureImage();
+    } else if (_cameraService.isInitialized &&
+        _cameraService.controller != null) {
       try {
         final XFile file = await _cameraService.controller!.takePicture();
         return file;
@@ -360,6 +412,7 @@ class LivenessController extends ChangeNotifier {
   /// Clean up resources
   @override
   void dispose() {
+    _singleCaptureService?.dispose();
     _cameraService.dispose();
     _faceDetectionService.dispose();
     _motionService.dispose();

@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -236,50 +237,113 @@ class HomeScreen extends StatelessWidget {
         builder: (context) => LivenessDetectionScreen(
           cameras: cameras,
           config: const LivenessConfig(
-            numberOfRandomChallenges: 2,
+            alwaysIncludeBlink: true,
+            challengeTypes: [
+              ChallengeType.turnLeft,
+              ChallengeType.turnRight,
+              ChallengeType.blink,
+            ],
           ),
           theme: LivenessTheme.fromMaterialColor(
             Colors.blue,
             brightness: Brightness.dark,
           ),
+          // Enable single final image capture
+          captureFinalImage: true,
+          // Show a button for manual capture as well
           showCaptureImageButton: true,
           showStatusIndicators: false,
           showAppBar: false,
           captureButtonText: 'Take Photo',
-          onImageCaptured: (sessionId, imageFile) {
+          // Process the final verification image
+          onFinalImageCaptured: (sessionId, imageFile, metadata) {
+            log('Final image captured:');
+            log('Session ID: $sessionId');
+            log('Image path: ${imageFile.path}');
+            log('Metadata: $metadata');
+
             // Show a dialog with the captured image
-            showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                title: const Text('Image Captured'),
-                content: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text('Session ID: $sessionId'),
-                    const SizedBox(height: 8),
-                    Text('Image saved to: ${imageFile.path}'),
-                    const SizedBox(height: 16),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image.asset(
-                        imageFile.path,
-                        height: 200,
-                        width: 200,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) =>
-                            const Text('Could not load image preview'),
+            if (context.mounted) {
+              showDialog(
+                context: context,
+                builder: (dialogContext) => AlertDialog(
+                  title: const Text('Verification Complete'),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text('Session ID: $sessionId'),
+                      const SizedBox(height: 8),
+                      Text('Image saved to: ${imageFile.path}'),
+                      const SizedBox(height: 16),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.file(
+                          File(imageFile.path),
+                          height: 200,
+                          width: 200,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            log('Error loading image: $error');
+                            return const Text('Could not load image preview');
+                          },
+                        ),
                       ),
+                      const SizedBox(height: 8),
+                      Text(
+                          'Challenge count: ${(metadata['challenges'] as List).length}'),
+                      Text('Duration: ${metadata['sessionDuration']} ms'),
+                    ],
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(dialogContext),
+                      child: const Text('Close'),
                     ),
                   ],
                 ),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: const Text('Close'),
+              );
+            }
+          },
+          // Handle manual capture separately
+          onManualImageCaptured: (sessionId, imageFile) {
+            log('Manual image captured:');
+            log('Session ID: $sessionId');
+            log('Image path: ${imageFile.path}');
+
+            if (context.mounted) {
+              showDialog(
+                context: context,
+                builder: (dialogContext) => AlertDialog(
+                  title: const Text('Manual Image Captured'),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text('Session ID: $sessionId'),
+                      const SizedBox(height: 8),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.file(
+                          File(imageFile.path),
+                          height: 200,
+                          width: 200,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            log('Error loading image: $error');
+                            return const Text('Could not load image preview');
+                          },
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            );
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(dialogContext),
+                      child: const Text('Close'),
+                    ),
+                  ],
+                ),
+              );
+            }
           },
           onLivenessCompleted: (sessionId, isSuccessful, metadata) {
             log('Liveness verification completed:');
