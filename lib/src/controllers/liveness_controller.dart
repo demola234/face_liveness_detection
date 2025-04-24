@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
@@ -188,9 +190,24 @@ class LivenessController extends ChangeNotifier {
     final screenCenterY = screenSize.height / 2 - screenSize.height * 0.05;
 
     final faceBox = face.boundingBox;
-    final faceCenterX = faceBox.left + faceBox.width / 2;
+
+    // This is where the problem is - we need to flip the X coordinate on Android with front camera
+    double faceCenterX;
+    if (Platform.isAndroid &&
+        _cameras.first.lensDirection == CameraLensDirection.front) {
+      // Flip the X coordinate for Android front camera
+      faceCenterX = screenSize.width - (faceBox.left + faceBox.width / 2);
+    } else {
+      faceCenterX = faceBox.left + faceBox.width / 2;
+    }
+
     final faceCenterY = faceBox.top + faceBox.height / 2;
 
+    // Debug prints to verify coordinates
+    debugPrint('Face center: ($faceCenterX, $faceCenterY)');
+    debugPrint('Screen center: ($screenCenterX, $screenCenterY)');
+
+    // Rest of your existing code...
     final ovalHeight = screenSize.height * 0.55;
     final ovalWidth = ovalHeight * 0.75;
     final faceWidthRatio = faceBox.width / ovalWidth;
@@ -199,9 +216,10 @@ class LivenessController extends ChangeNotifier {
         (faceCenterX - screenCenterX).abs() > screenSize.width * 0.1;
     final isVerticallyOff =
         (faceCenterY - screenCenterY).abs() > screenSize.height * 0.1;
-    final isTooBig = faceWidthRatio > 0.9;
+    final isTooBig = faceWidthRatio > 1.5;
     final isTooSmall = faceWidthRatio < 0.5;
 
+    // Direction logic using the corrected coordinates
     if (isTooBig) {
       _faceCenteringMessage = 'Move farther away';
     } else if (isTooSmall) {
@@ -287,9 +305,11 @@ class LivenessController extends ChangeNotifier {
     _statusMessage = 'Liveness verification complete!';
 
     // Capture final image if enabled and verification was successful
-    if (_captureFinalImage && _isVerificationSuccessful) {
+    if (_captureFinalImage &&
+        _isVerificationSuccessful &&
+        _singleCaptureService != null) {
       try {
-        final XFile? finalImage = await captureImage();
+        final XFile? finalImage = await _singleCaptureService!.captureImage();
 
         if (finalImage != null && _onFinalImageCaptured != null) {
           // Create metadata for the captured image

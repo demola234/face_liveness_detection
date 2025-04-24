@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
@@ -52,6 +54,8 @@ class FaceDetectionService {
     );
   }
 
+  CameraDescription? _currentCamera;
+
   /// Update configuration
   void updateConfig(LivenessConfig config) {
     if (_config.minFaceSize != config.minFaceSize) {
@@ -67,22 +71,35 @@ class FaceDetectionService {
     final screenCenterY = screenSize.height / 2 - screenSize.height * 0.05;
 
     final faceBox = face.boundingBox;
-    final faceCenterX = faceBox.left + faceBox.width / 2;
-    final faceCenterY = faceBox.top + faceBox.height / 2;
 
-    final maxHorizontalOffset = screenSize.width * 0.1;
+    // Apply the same coordinate correction here
+    double faceCenterX;
+    if (Platform.isAndroid &&
+        _currentCamera?.lensDirection == CameraLensDirection.front) {
+      faceCenterX = screenSize.width - (faceBox.left + faceBox.width / 2);
+    } else {
+      faceCenterX = faceBox.left + faceBox.width / 2;
+    }
+
+    final faceCenterY = faceBox.top + faceBox.height / 2;
+    final bool isAndroid = Platform.isAndroid;
+    final double faceMarginMultiplier =
+        isAndroid ? 1.2 : 1.0; // More margin on Android
+
+    final maxHorizontalOffset = screenSize.width * 0.15 * faceMarginMultiplier;
     final maxVerticalOffset = screenSize.height * 0.1;
 
     final ovalHeight = screenSize.height * 0.55;
     final ovalWidth = ovalHeight * 0.75;
 
-    const minFaceWidthRatio = 0.5;
-    const maxFaceWidthRatio = 0.9;
+    var minFaceWidthRatio = Platform.isAndroid ? 0.2 : 0.3;
+    const maxFaceWidthRatio = 0.95;
 
     final faceWidthRatio = faceBox.width / ovalWidth;
 
-    final isHorizontallyCentered =
-        (faceCenterX - screenCenterX).abs() < maxHorizontalOffset;
+    final isHorizontallyCentered = Platform.isAndroid
+        ? true
+        : (faceCenterX - screenCenterX).abs() < maxHorizontalOffset;
     final isVerticallyCentered =
         (faceCenterY - screenCenterY).abs() < maxVerticalOffset;
 
@@ -101,6 +118,8 @@ class FaceDetectionService {
   /// Process camera image to detect faces
   Future<List<Face>> processImage(
       CameraImage image, CameraDescription camera) async {
+    _currentCamera = camera;
+
     if (_isProcessingImage) return [];
 
     _isProcessingImage = true;
@@ -128,6 +147,35 @@ class FaceDetectionService {
     } finally {
       _isProcessingImage = false;
     }
+  }
+
+  Offset transformFacePosition(Offset facePosition, Size imageSize) {
+    if (_currentCamera == null) return facePosition;
+
+    final bool isFrontCamera =
+        _currentCamera!.lensDirection == CameraLensDirection.front;
+    final int rotation = _currentCamera!.sensorOrientation;
+
+    double x = facePosition.dx;
+    double y = facePosition.dy;
+
+    // Apply transformations based on camera type and orientation
+    if (Platform.isAndroid) {
+      if (isFrontCamera) {
+        // Front camera on Android might need horizontal flipping
+        x = imageSize.width - x;
+
+        // Adjust based on rotation
+        if (rotation == 90 || rotation == 270) {
+          // Swap coordinates for 90/270 degree rotations
+          final temp = x;
+          x = y;
+          y = temp;
+        }
+      }
+    }
+
+    return Offset(x, y);
   }
 
   /// Detect if a challenge has been completed
