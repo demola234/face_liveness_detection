@@ -14,7 +14,7 @@ A highly customizable Flutter package for face liveness detection with multiple 
 - 📸 Optional image capture capability
 
 ## Demo 
-<img src="https://raw.githubusercontent.com/demola234/smart_liveliness_detection/main/screenshots/smart_liveliness_detector.gif" width="270" height="600"> 
+<img src="https://raw.githubusercontent.com/demola234/smart_liveliness_detector/main/screenshots/smart_liveliness_detector.gif" width="270" height="600"> 
 
 ## Installation
 
