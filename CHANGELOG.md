@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.1 - April 24, 2025
+* Bug fixes and improvements
+
 ## 0.1.0 - April 24, 2025
 * Bug fixes and improvements
 * Android fix initialization fix
