@@ -13,8 +13,8 @@ A highly customizable Flutter package for face liveness detection with multiple 
 - 📱 Simple integration with Flutter apps
 - 📸 Optional image capture capability
 
-## Demo 
-<img src="https://raw.githubusercontent.com/demola234/smart_liveliness_detector/main/screenshots/smart_liveliness_detector.gif" width="270" height="600"> 
+## Demo Video
+Check out our [demo video](https://vimeo.com/1078400278?share=copy) to see the package in action!
 
 ## Installation
 
@@ -22,7 +22,7 @@ Add this package to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  smart_liveliness_detection: ^0.1.0
+  smart_liveliness_detection: ^0.0.1-beta.6
 ```
 
 Then run:
