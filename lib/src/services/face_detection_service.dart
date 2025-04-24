@@ -65,6 +65,10 @@ class FaceDetectionService {
     }
   }
 
+  void forceFaceCentered(bool centered) {
+    _isFaceCentered = centered;
+  }
+
   /// Check if face is centered in the oval guide
   bool checkFaceCentering(Face face, Size screenSize) {
     final screenCenterX = screenSize.width / 2;
@@ -112,6 +116,9 @@ class FaceDetectionService {
 
     _isFaceCentered =
         isHorizontallyCentered && isVerticallyCentered && isRightSize;
+    debugPrint(
+        'Face centered check: H=$isHorizontallyCentered, V=$isVerticallyCentered, Size=$isRightSize, Final=$_isFaceCentered');
+
     return _isFaceCentered;
   }
 

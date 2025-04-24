@@ -239,6 +239,12 @@ class LivenessController extends ChangeNotifier {
     } else {
       _faceCenteringMessage = 'Perfect! Hold still';
     }
+
+    if (!isTooBig && !isTooSmall && !isHorizontallyOff && !isVerticallyOff) {
+      _faceCenteringMessage = 'Perfect! Hold still';
+      // Force the face detection service to consider the face centered
+      _faceDetectionService.forceFaceCentered(true);
+    }
   }
 
   /// Process liveness detection for the current state
