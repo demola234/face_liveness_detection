@@ -12,7 +12,7 @@ class LivenessProgressBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return LinearProgressIndicator(
       value: progress,
-      backgroundColor: Colors.grey.withOpacity(0.5),
+      backgroundColor: Colors.grey.withValues(alpha: 0.5),
       // valueColor: AlwaysStoppedAnimation<Color>(
       //   progress == 1.0 ? Colors.green : Colors.blue,
       // ),

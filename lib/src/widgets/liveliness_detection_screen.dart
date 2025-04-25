@@ -99,7 +99,6 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionScreen>
     with WidgetsBindingObserver {
   late LivenessController _controller;
   XFile? _finalImage;
-  Map<String, dynamic>? _imageMetadata;
 
   @override
   void initState() {
@@ -125,7 +124,6 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionScreen>
       String sessionId, XFile imageFile, Map<String, dynamic> metadata) {
     setState(() {
       _finalImage = imageFile;
-      _imageMetadata = metadata;
     });
 
     if (widget.onFinalImageCaptured != null) {
@@ -164,7 +162,6 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionScreen>
       );
       setState(() {
         _finalImage = null;
-        _imageMetadata = null;
       });
     }
   }
