@@ -73,7 +73,7 @@ class OvalOverlayPainter extends CustomPainter {
 
     // Draw the main overlay
     final paint = Paint()
-      ..color = theme.overlayColor.withOpacity(theme.overlayOpacity)
+      ..color = theme.overlayColor.withValues(alpha: theme.overlayOpacity)
       ..style = PaintingStyle.fill;
 
     final path = Path()
@@ -122,7 +122,7 @@ class OvalOverlayPainter extends CustomPainter {
 
     // Draw progress track (background)
     final trackPaint = Paint()
-      ..color = progressTrackColor.withOpacity(0.3)
+      ..color = progressTrackColor.withValues(alpha: 0.3)
       ..style = PaintingStyle.stroke
       ..strokeWidth = progressWidth
       ..strokeCap = StrokeCap.round;

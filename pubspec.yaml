@@ -1,6 +1,6 @@
 name: smart_liveliness_detection
 description: This package helps you verify that a real person is present in front of the camera, not a photo, video, or mask.
-version: 0.1.1
+version: 0.1.2
 homepage: https://github.com/demola234/smart_liveliness_detection
 
 environment:
@@ -12,7 +12,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter:
     sdk: flutter
-  google_mlkit_face_detection: ^0.9.0
+  google_mlkit_face_detection: ^0.11.0
   provider: ^6.1.2
   sensors_plus: ^6.1.1
   uuid: ^4.5.1
@@ -22,6 +22,13 @@ dev_dependencies:
   dartdoc: ^8.1.0
   flutter_test:
     sdk: flutter
+
+platforms:
+  ? android
+  ? ios
+  ? linux
+  ? macos
+  ? windows
 
 flutter:
   uses-material-design: true

@@ -6,32 +6,32 @@ import '../config/theme_config.dart';
 class InstructionOverlay extends StatelessWidget {
   /// Instruction text to display
   final String instruction;
-  
+
   /// Theme for styling
   final LivenessTheme theme;
-  
+
   /// Optional icon to display
   final IconData? icon;
-  
+
   /// Whether to animate the instruction
   final bool animate;
-  
+
   /// Optional padding around the instruction
   final EdgeInsetsGeometry padding;
-  
+
   /// Optional shape of the instruction container
   final ShapeBorder? shape;
 
   /// Constructor
   const InstructionOverlay({
-    Key? key,
+    super.key,
     required this.instruction,
     this.theme = const LivenessTheme(),
     this.icon,
     this.animate = false,
     this.padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
     this.shape,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +42,8 @@ class InstructionOverlay extends StatelessWidget {
           Icon(
             icon,
             color: theme.instructionTextStyle.color ?? Colors.white,
-            size: theme.instructionTextStyle.fontSize != null 
-                ? theme.instructionTextStyle.fontSize! * 1.5 
+            size: theme.instructionTextStyle.fontSize != null
+                ? theme.instructionTextStyle.fontSize! * 1.5
                 : 24,
           ),
           const SizedBox(width: 8),
@@ -61,7 +61,7 @@ class InstructionOverlay extends StatelessWidget {
     final container = Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.7),
+        color: Colors.black.withValues(alpha: 0.7),
         borderRadius: shape != null ? null : BorderRadius.circular(16),
       ),
       child: content,
@@ -69,8 +69,8 @@ class InstructionOverlay extends StatelessWidget {
 
     if (animate) {
       return _AnimatedInstruction(
-        child: container,
         shape: shape,
+        child: container,
       );
     } else {
       return container;
@@ -84,10 +84,9 @@ class _AnimatedInstruction extends StatefulWidget {
   final ShapeBorder? shape;
 
   const _AnimatedInstruction({
-    Key? key,
     required this.child,
     this.shape,
-  }) : super(key: key);
+  });
 
   @override
   State<_AnimatedInstruction> createState() => _AnimatedInstructionState();
@@ -120,7 +119,7 @@ class _AnimatedInstructionState extends State<_AnimatedInstruction>
       parent: _controller,
       curve: Curves.easeInOut,
     ));
-    
+
     _opacityAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _controller,
@@ -158,20 +157,20 @@ class _AnimatedInstructionState extends State<_AnimatedInstruction>
 class AnimatedStatusMessage extends StatelessWidget {
   /// Current status message
   final String message;
-  
+
   /// Theme for styling
   final LivenessTheme theme;
-  
+
   /// Optional icon to display
   final IconData? icon;
 
   /// Constructor
   const AnimatedStatusMessage({
-    Key? key,
+    super.key,
     required this.message,
     this.theme = const LivenessTheme(),
     this.icon,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

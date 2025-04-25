@@ -61,7 +61,7 @@ class OvalColorProgressPainter extends CustomPainter {
 
     // Draw overlay
     final paint = Paint()
-      ..color = theme.overlayColor.withOpacity(theme.overlayOpacity)
+      ..color = theme.overlayColor.withValues(alpha: theme.overlayOpacity)
       ..style = PaintingStyle.fill;
 
     final path = Path()

@@ -6,37 +6,37 @@ import '../config/theme_config.dart';
 class StatusIndicator extends StatelessWidget {
   /// Whether the status is active
   final bool isActive;
-  
+
   /// Icon to show when active
   final IconData activeIcon;
-  
+
   /// Icon to show when inactive
   final IconData inactiveIcon;
-  
+
   /// Color to use when active
   final Color activeColor;
-  
+
   /// Color to use when inactive
   final Color inactiveColor;
-  
+
   /// Theme for styling
   final LivenessTheme theme;
-  
+
   /// Optional label to display
   final String? label;
-  
+
   /// Size of the indicator
   final double size;
-  
+
   /// Whether to animate the status change
   final bool animate;
-  
+
   /// Optional tooltip text
   final String? tooltip;
 
   /// Constructor
   const StatusIndicator({
-    Key? key,
+    super.key,
     required this.isActive,
     required this.activeIcon,
     required this.inactiveIcon,
@@ -47,8 +47,8 @@ class StatusIndicator extends StatelessWidget {
     this.size = 24.0,
     this.animate = true,
     this.tooltip,
-  }) : super(key: key);
-  
+  });
+
   /// Convenience constructor for face detection status
   factory StatusIndicator.faceDetection({
     bool isActive = false,
@@ -70,7 +70,7 @@ class StatusIndicator extends StatelessWidget {
       tooltip: isActive ? 'Face detected' : 'No face detected',
     );
   }
-  
+
   /// Convenience constructor for lighting status
   factory StatusIndicator.lighting({
     bool isActive = false,
@@ -99,8 +99,8 @@ class StatusIndicator extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: isActive
-            ? activeColor.withOpacity(0.7)
-            : inactiveColor.withOpacity(0.7),
+            ? activeColor.withValues(alpha: 0.7)
+            : inactiveColor.withValues(alpha: 0.7),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Row(
@@ -125,7 +125,7 @@ class StatusIndicator extends StatelessWidget {
         ],
       ),
     );
-    
+
     final Widget result = animate
         ? AnimatedSwitcher(
             duration: const Duration(milliseconds: 300),
@@ -144,7 +144,7 @@ class StatusIndicator extends StatelessWidget {
             ),
           )
         : indicator;
-        
+
     if (tooltip != null) {
       return Tooltip(
         message: tooltip!,
@@ -160,28 +160,28 @@ class StatusIndicator extends StatelessWidget {
 class StatusIndicatorRow extends StatelessWidget {
   /// List of status indicators to display
   final List<StatusIndicator> indicators;
-  
+
   /// Spacing between indicators
   final double spacing;
-  
+
   /// Alignment of the row
   final MainAxisAlignment alignment;
-  
+
   /// Background color
   final Color? backgroundColor;
-  
+
   /// Padding around the row
   final EdgeInsetsGeometry padding;
 
   /// Constructor
   const StatusIndicatorRow({
-    Key? key,
+    super.key,
     required this.indicators,
     this.spacing = 8.0,
     this.alignment = MainAxisAlignment.center,
     this.backgroundColor,
     this.padding = EdgeInsets.zero,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -201,7 +201,7 @@ class StatusIndicatorRow extends StatelessWidget {
               },
             ),
     );
-    
+
     if (backgroundColor != null) {
       return Container(
         padding: padding,

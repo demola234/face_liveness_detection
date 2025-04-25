@@ -25,7 +25,7 @@ class MotionService {
   /// Start tracking device motion
   void startAccelerometerTracking() {
     _accelerometerSubscription =
-        accelerometerEvents.listen((AccelerometerEvent event) {
+        accelerometerEventStream().listen((AccelerometerEvent event) {
       _accelerometerReadings.add(event);
       if (_accelerometerReadings.length > _config.maxMotionReadings) {
         _accelerometerReadings.removeAt(0);

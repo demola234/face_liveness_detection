@@ -6,46 +6,46 @@ import '../config/theme_config.dart';
 class SuccessOverlay extends StatefulWidget {
   /// Session ID
   final String sessionId;
-  
+
   /// Callback for reset button
   final VoidCallback onReset;
-  
+
   /// Theme for styling
   final LivenessTheme theme;
-  
+
   /// Whether verification was successful
   final bool isSuccessful;
-  
+
   /// Custom success message
   final String? successMessage;
-  
+
   /// Custom failure message
   final String? failureMessage;
-  
+
   /// Custom button text
   final String? buttonText;
-  
+
   /// Whether to show session ID
   final bool showSessionId;
-  
+
   /// Number of characters of session ID to show (0 for all)
   final int sessionIdCharacters;
-  
+
   /// Custom widget to display inside the overlay
   final Widget? customContent;
-  
+
   /// Whether to show the capture image button
   final bool showCaptureImageButton;
-  
+
   /// Callback when image capture is requested
   final Function(String sessionId)? onCaptureImage;
-  
+
   /// Button text for image capture
   final String? captureButtonText;
 
   /// Constructor
   const SuccessOverlay({
-    Key? key,
+    super.key,
     required this.sessionId,
     required this.onReset,
     this.theme = const LivenessTheme(),
@@ -59,7 +59,7 @@ class SuccessOverlay extends StatefulWidget {
     this.showCaptureImageButton = false,
     this.onCaptureImage,
     this.captureButtonText,
-  }) : super(key: key);
+  });
 
   @override
   State<SuccessOverlay> createState() => _SuccessOverlayState();
@@ -130,9 +130,11 @@ class _SuccessOverlayState extends State<SuccessOverlay>
         ? widget.successMessage ?? 'Verification Complete!'
         : widget.failureMessage ?? 'Verification Failed';
 
-    final IconData icon = widget.isSuccessful ? Icons.check_circle : Icons.error;
-    final Color iconColor =
-        widget.isSuccessful ? widget.theme.successColor : widget.theme.errorColor;
+    final IconData icon =
+        widget.isSuccessful ? Icons.check_circle : Icons.error;
+    final Color iconColor = widget.isSuccessful
+        ? widget.theme.successColor
+        : widget.theme.errorColor;
     final String buttonText = widget.buttonText ?? 'Start Again';
 
     String displaySessionId = widget.sessionId;
@@ -148,7 +150,7 @@ class _SuccessOverlayState extends State<SuccessOverlay>
         return Opacity(
           opacity: _fadeInAnimation.value,
           child: Container(
-            color: Colors.black.withOpacity(0.7),
+            color: Colors.black.withValues(alpha: 0.7),
             child: Center(
               child: Transform.scale(
                 scale: _scaleAnimation.value,
@@ -173,7 +175,8 @@ class _SuccessOverlayState extends State<SuccessOverlay>
                       ),
                     ],
                     const SizedBox(height: 30),
-                    if (widget.showCaptureImageButton && widget.isSuccessful) ...[
+                    if (widget.showCaptureImageButton &&
+                        widget.isSuccessful) ...[
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: widget.theme.primaryColor,
@@ -185,7 +188,8 @@ class _SuccessOverlayState extends State<SuccessOverlay>
                             widget.onCaptureImage!(widget.sessionId);
                           }
                         },
-                        child: Text(widget.captureButtonText ?? 'Capture Image'),
+                        child:
+                            Text(widget.captureButtonText ?? 'Capture Image'),
                       ),
                       const SizedBox(height: 16),
                     ],
@@ -216,28 +220,28 @@ class _SuccessOverlayState extends State<SuccessOverlay>
 class ChallengeCompletedAnimation extends StatefulWidget {
   /// Type of challenge completed
   final String challengeType;
-  
+
   /// Theme for styling
   final LivenessTheme theme;
-  
+
   /// Duration of the animation
   final Duration duration;
-  
+
   /// Size of the animation
   final double size;
-  
+
   /// Custom message to display
   final String? message;
 
   /// Constructor
   const ChallengeCompletedAnimation({
-    Key? key,
+    super.key,
     required this.challengeType,
     this.theme = const LivenessTheme(),
     this.duration = const Duration(milliseconds: 1500),
     this.size = 80.0,
     this.message,
-  }) : super(key: key);
+  });
 
   @override
   State<ChallengeCompletedAnimation> createState() =>
@@ -347,7 +351,7 @@ class _ChallengeCompletedAnimationState
             child: Center(
               child: Container(
                 decoration: BoxDecoration(
-                  color: widget.theme.primaryColor.withOpacity(0.8),
+                  color: widget.theme.primaryColor.withValues(alpha: 0.8),
                   shape: BoxShape.circle,
                 ),
                 padding: const EdgeInsets.all(20),
