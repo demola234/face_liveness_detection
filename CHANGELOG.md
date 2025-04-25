@@ -1,4 +1,8 @@
-# Changelog
+# Changelog 
+
+## 0.1.3 - April 25, 2025
+* Google ML Kit upgraded to version 0.11.0
+* Bug fixes and improvements
 
 ## 0.1.1 - April 24, 2025
 * Bug fixes and improvements
