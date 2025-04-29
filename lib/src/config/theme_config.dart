@@ -126,7 +126,8 @@ class LivenessTheme {
     bool? useOvalPulseAnimation,
   }) {
     return LivenessTheme(
-      appBarBackgroundColor: appBarBackgroundColor ?? this.appBarBackgroundColor,
+      appBarBackgroundColor:
+          appBarBackgroundColor ?? this.appBarBackgroundColor,
       appBarTextColor: appBarTextColor ?? this.appBarTextColor,
       backgroundColor: backgroundColor ?? this.backgroundColor,
       primaryColor: primaryColor ?? this.primaryColor,
@@ -142,10 +143,14 @@ class LivenessTheme {
       successTitleStyle: successTitleStyle ?? this.successTitleStyle,
       sessionIdStyle: sessionIdStyle ?? this.sessionIdStyle,
       resetButtonStyle: resetButtonStyle ?? this.resetButtonStyle,
-      progressIndicatorColor: progressIndicatorColor ?? this.progressIndicatorColor,
-      progressIndicatorBackgroundColor: progressIndicatorBackgroundColor ?? this.progressIndicatorBackgroundColor,
-      progressIndicatorHeight: progressIndicatorHeight ?? this.progressIndicatorHeight,
-      useOvalPulseAnimation: useOvalPulseAnimation ?? this.useOvalPulseAnimation,
+      progressIndicatorColor:
+          progressIndicatorColor ?? this.progressIndicatorColor,
+      progressIndicatorBackgroundColor: progressIndicatorBackgroundColor ??
+          this.progressIndicatorBackgroundColor,
+      progressIndicatorHeight:
+          progressIndicatorHeight ?? this.progressIndicatorHeight,
+      useOvalPulseAnimation:
+          useOvalPulseAnimation ?? this.useOvalPulseAnimation,
     );
   }
 
@@ -155,13 +160,13 @@ class LivenessTheme {
     Brightness brightness = Brightness.dark,
   }) {
     final bool isDark = brightness == Brightness.dark;
-    
+
     // Generate a color scheme from the primary color
     final ColorScheme colorScheme = ColorScheme.fromSeed(
       seedColor: primaryColor,
       brightness: brightness,
     );
-    
+
     return LivenessTheme(
       appBarBackgroundColor: colorScheme.surface.withValues(alpha: 0.8),
       appBarTextColor: colorScheme.onSurface,
