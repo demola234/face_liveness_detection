@@ -13,11 +13,6 @@ A highly customizable Flutter package for face liveness detection with multiple 
 - 📱 Simple integration with Flutter apps
 - 📸 Optional image capture capability
 
-## Demo 
-![Example](https://github.com/demola234/smart_liveliness_detection/blob/main/screenshots/smart_liveliness_detector.gif?raw=true)
-
-## Demo Video
-Check out our [demo video](https://vimeo.com/1078400278?share=copy) to see the package in action!
 
 ## Installation
 
@@ -357,6 +352,12 @@ This package implements several anti-spoofing measures:
 2. **Screen glare detection** - Detects presentation attacks using screens
 3. **Motion correlation** - Ensures device movement correlates with head movement
 4. **Timing validation** - Ensures challenges are completed within reasonable times
+
+## Demo 
+![Example](https://github.com/demola234/smart_liveliness_detection/blob/main/screenshots/smart_liveliness_detector.gif?raw=true)
+
+## Demo Video
+Check out our [demo video](https://vimeo.com/1078400278?share=copy) to see the package in action!
 
 ## Contributing
 
